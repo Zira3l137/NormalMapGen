@@ -40,6 +40,8 @@ Run the script from the command line with the following syntax:
 python normal_map_generator.py <input_directory> [options]
 ```
 
+Each script in this repository can be used separetely as a command line tool for better flexibility and control. Use `-h` to see the available options.
+
 ### Options
 
 - `-o`, `--output`: Specify the output directory (default: same as input directory)
