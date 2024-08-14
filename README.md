@@ -18,10 +18,6 @@ This tool generates normal maps from input images, blending micro and macro deta
 - Pillow
 - [imaginairy_normal_map](https://github.com/brycedrennan/imaginairy-normal-map)
 
-
-## Installation
-
-
 ## Usage
 
 1. Clone this repository:
