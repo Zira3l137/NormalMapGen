@@ -39,6 +39,7 @@ Run the script from the command line with the following syntax:
 ```
 python normal_map_generator.py <input_directory> [options]
 ```
+First execution of this script will take some time as it will download and setup necessary dependencies. Further executions will be faster.
 
 Each script in this repository can be used separetely as a command line tool for better flexibility and control. Use `-h` to see the available options.
 
