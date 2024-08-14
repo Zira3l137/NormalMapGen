@@ -23,7 +23,7 @@ This tool generates normal maps from input images, blending micro and macro deta
 
 1. Clone this repository:
    ```
-   git clone https://github.com/yourusername/normal-map-generator.git
+   git clone https://github.com/Zira3l137/NormalMapGenerator
    cd normal-map-generator
    ```
 
