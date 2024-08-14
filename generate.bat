@@ -1,0 +1,1 @@
+python normal_map_generator.py .\ -b 1.0
