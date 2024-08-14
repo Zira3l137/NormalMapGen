@@ -21,24 +21,41 @@ This tool generates normal maps from input images, blending micro and macro deta
 
 ## Installation
 
-1. Clone this repository:
-   ```
-   git clone https://github.com/Zira3l137/NormalMapGenerator
-   cd normal-map-generator
-   ```
-
-2. Install the required packages (you can use `requirements.txt`):
-   ```
-   pip install -r requirements.txt
-   ```
 
 ## Usage
 
-Run the script from the command line with the following syntax:
+1. Clone this repository:
+  
+  ```
+  git clone https://github.com/Zira3l137/NormalMapGenerator
+  cd normal-map-generator
+  ```
 
-```
-python normal_map_generator.py <input_directory> [options]
-```
+
+2. Navigate inro the cloned repository directory and create a virtual environment with the following commands:
+
+  ```
+  python -m venv .
+  ```
+
+3. Activate the virtual environment:
+
+  ```
+  scripts\activate
+  ```
+
+4. Install the required packages (you can use `requirements.txt`):
+  
+  ```
+  pip install -r requirements.txt
+  ```
+
+5. Run the script from the command line with the following syntax:
+
+  ```
+  python normal_map_generator.py <input_directory> [options]
+  ```
+
 First execution of this script will take some time as it will download and setup necessary dependencies. Further executions will be faster.
 
 Each script in this repository can be used separetely as a command line tool for better flexibility and control. Use `-h` to see the available options.
