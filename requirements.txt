@@ -1,0 +1,5 @@
+numpy==1.26.4
+Pillow==10.4.0
+OpenCV-Python==4.10.0.84
+imageio==2.35.0
+imaginairy_normal_map==0.0.3
