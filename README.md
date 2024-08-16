@@ -31,7 +31,7 @@ To use this tool in a virtual environment, you can follow the steps below:
 1. Clone this repository:
   
   ```
-  git clone https://github.com/Zira3l137/NormalMapGenerator
+  git clone https://github.com/Zira3l137/NormalMapGen
   ```
 
 
