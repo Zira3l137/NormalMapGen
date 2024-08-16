@@ -1,4 +1,4 @@
-# NormalMapGenerator
+# NormalMapGen
 
 This tool generates normal maps from input images, blending micro and macro details to create high-quality normal maps for texturing purposes.
 
@@ -38,7 +38,7 @@ To use this tool in a virtual environment, you can follow the steps below:
 2. Navigate inro the cloned repository directory and create a virtual environment with the following commands:
 
   ```
-  cd normal-map-generator
+  cd normalmapgen
   python -m venv .
   ```
 
