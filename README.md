@@ -6,7 +6,7 @@ This tool generates normal maps from input images, blending micro and macro deta
 
 - Generates micro and macro normal maps from input images
 - Blends micro and macro normal maps with adjustable strength and blending factor
-- Converts output to DDS format
+- Converts output to specified format
 - Supports PNG, JPG, and TGA input formats
 
 ## Requirements
@@ -18,19 +18,27 @@ This tool generates normal maps from input images, blending micro and macro deta
 - Pillow
 - [imaginairy_normal_map](https://github.com/brycedrennan/imaginairy-normal-map)
 
-## Usage
+## Installation
+
+There are two ways to install this tool:
+
+### Using virtual environments (Recommended)
+
+To use this tool in a virtual environment, you can follow the steps below:
+
+0. Install virtual environements with `pip install virtualenv`
 
 1. Clone this repository:
   
   ```
   git clone https://github.com/Zira3l137/NormalMapGenerator
-  cd normal-map-generator
   ```
 
 
 2. Navigate inro the cloned repository directory and create a virtual environment with the following commands:
 
   ```
+  cd normal-map-generator
   python -m venv .
   ```
 
@@ -46,7 +54,21 @@ This tool generates normal maps from input images, blending micro and macro deta
   pip install -r requirements.txt
   ```
 
-5. Run the script from the command line with the following syntax:
+### Manually
+
+1. Download scripts from this repository as a zip file.
+
+2. Extract the zip file anywhere you want.
+
+3. Install the required packages (you can use `requirements.txt`):
+
+  ```
+  pip install -r requirements.txt
+  ```
+
+## Usage
+
+1. Run the script from the command line with the following syntax:
 
   ```
   python normal_map_generator.py <input_directory> [options]
@@ -59,16 +81,17 @@ Each script in this repository can be used separetely as a command line tool for
 ### Options
 
 - `-o`, `--output`: Specify the output directory (default: same as input directory)
-- `-s`, `--strength`: Set the normal map strength (default: 1.0)
 - `-b`, `--blend`: Set the blending factor between micro and macro normal maps (default: 0.5)
+- `-f`, `--format`: Set the output format for the final normal map (default: dds)
+- `-h`, `--help`: Show this help message
 
 ### Example
 
 ```
-python normal_map_generator.py ./input_images -o ./output_normals -s 1.2 -b 0.6
+python normal_map_generator.py ./input_images -o ./output_normals -s 1.2 -b 0.6 -f tga
 ```
 
-This command will process all compatible images in the `./input_images` directory, generate 2 normal maps for each image with a strength of 1.2, blend them with a factor of 0.6, and save the results in the `./output_normals` directory.
+This command will process all compatible images in the `./input_images` directory, generate 2 normal maps for each image with a strength of 1.2, blend them with a factor of 0.6, and save the results in the `./output_normals` directory in `.tga` format.
 
 ## How it works
 
@@ -78,7 +101,7 @@ This command will process all compatible images in the `./input_images` director
    - Generates a macro details normal map
    - Blends the micro and macro normal maps
    - Saves the blended normal map as a PNG
-3. Converts all generated normal maps to DDS format
+3. Converts all generated normal maps to specified format
 4. Removes the intermediate PNG files
 
 ## Contributing
@@ -91,7 +114,7 @@ This project is licensed under the GNU General Public License v3.0 (see [link to
 
 ## Disclaimer
 
-The source code is provided as-is, without warranty of any kind.
+The source code is provided as-is, without warranty of any kind. It is not intended for use in production environments and is provided for free use for everyone.
 
 ## Acknowledgements
 
@@ -104,4 +127,6 @@ This project uses the following external scripts (included in this repository):
 - `getMicroNorm.py`
 - `print_colored.py`
 
-Credit: [brycedrennan](https://github.com/brycedrennan)
+## Credits
+
+- [brycedrennan](https://github.com/brycedrennan)

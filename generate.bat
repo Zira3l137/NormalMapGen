@@ -1,1 +1,1 @@
-python normal_map_generator.py .\ -b 1.0
+python normalMapGen.py .\ -b 1.0
