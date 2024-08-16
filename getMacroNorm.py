@@ -8,7 +8,7 @@ from print_colored import print_colored
 
 
 def create_macro_normal_map(input_image: str) -> MatLike:
-    image = Image.open(input_image)
+    image = Image.open(input_image).convert("RGB")
     image = create_normal_map_pil_img(image)
     image = cvtColor(array(image), COLOR_BGR2RGB)
     return image
