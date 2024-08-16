@@ -71,7 +71,7 @@ To use this tool in a virtual environment, you can follow the steps below:
 1. Run the script from the command line with the following syntax:
 
   ```
-  python normal_map_generator.py <input_directory> [options]
+  python normalMapGen.py <input_directory> [options]
   ```
 
 First execution of this script will take some time as it will download and setup necessary dependencies. Further executions will be faster.
@@ -88,7 +88,7 @@ Each script in this repository can be used separetely as a command line tool for
 ### Example
 
 ```
-python normal_map_generator.py ./input_images -o ./output_normals -s 1.2 -b 0.6 -f tga
+python normalMapGen.py ./input_images -o ./output_normals -s 1.2 -b 0.6 -f tga
 ```
 
 This command will process all compatible images in the `./input_images` directory, generate 2 normal maps for each image with a strength of 1.2, blend them with a factor of 0.6, and save the results in the `./output_normals` directory in `.tga` format.
