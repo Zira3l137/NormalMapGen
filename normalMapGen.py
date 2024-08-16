@@ -147,8 +147,8 @@ def main():
         if normal.name.lower().endswith(".png") and normal.name.lower().startswith(
             "normal_"
         ):
-            convert2dds(normal.path, output_dir, output_format)
             if output_format != "png":
+                convert2dds(normal.path, output_dir, output_format)
                 remove(normal.path)
     print_colored("green", "Done!")
 
