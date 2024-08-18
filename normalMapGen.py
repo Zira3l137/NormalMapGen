@@ -1,108 +1,66 @@
 from argparse import ArgumentParser
-from os import mkdir
-from os import name as os_name
-from os import path, remove, scandir, system
+from os import scandir
+from pathlib import Path
+from traceback import format_exc
 
-import imageio.v3 as imageio
-from cv2 import COLOR_RGB2BGR, cvtColor, imwrite
+from cv2 import COLOR_BGR2RGB, cvtColor
+from PIL import Image
 
 from blendNorms import blend_normals
 from getMacroNorm import create_macro_normal_map
 from getMicroNorm import create_micro_normal_map
-from print_colored import print_colored
-
-CLEAR = "cls" if os_name == "nt" else "clear"
+from print_colored import print_colored, print_mixed
 
 
-def imgs2normals(
-    input_dir: str,
-    output_dir: str | None,
+def generate_normal(
+    input_image: str, output_path: str, output_format: str, blending_factor: float
+) -> bool:
+    print_mixed("blue", text="Processing image: ", colored_text=(input_image))
+    input_image_path = Path(input_image).absolute()
+
+    try:
+        print_colored("blue", "Generating normal map (1/2)...")
+        micro_normal_map = create_micro_normal_map(str(input_image_path))
+
+        print_colored("blue", "Generating normal map (2/2)...")
+        macro_normal_map = create_macro_normal_map(str(input_image_path))
+
+        print_colored("blue", "Blending details...")
+        normal_map = blend_normals(micro_normal_map, macro_normal_map, blending_factor)
+
+        print_mixed("green", text="Saving as: ", colored_text=output_path)
+        output_rgb = cvtColor(normal_map, COLOR_BGR2RGB)
+        Image.fromarray(output_rgb).save(output_path, format=output_format)
+    except Exception as e:
+        traceback_str = format_exc()
+        print_mixed("red", text=traceback_str + "\n", colored_text=str(e))
+        return False
+
+    print_colored("green", "Done!")
+    return True
+
+
+def process_directory(
+    input_directory: str,
+    output_directory: str,
+    output_format: str,
     blending_factor: float,
 ) -> bool:
-    found_images: bool = False
-    if not output_dir:
-        output_dir = input_dir
-    input_directory = path.abspath(input_dir)
-    output_directory = path.abspath(output_dir)
-    if not path.exists(output_directory):
-        mkdir(output_directory)
-
-    for input_img in scandir(input_directory):
-        if input_img.is_dir():
+    for image in scandir(input_directory):
+        if image.is_dir():
             continue
         if True not in [
-            input_img.name.lower().endswith(ext) for ext in [".png", ".jpg", ".tga"]
+            Path(image.name).suffix.lower() == ext for ext in [".png", ".jpg", ".tga"]
         ]:
             continue
-
-        found_images = True
-
-        system(CLEAR)
-        print("Processing image: " + input_img.path)
-        base_img = imageio.imread(input_img.path)
-        base_img = cvtColor(base_img, COLOR_RGB2BGR)
-
-        system(CLEAR)
-        print_colored("blue", "Generating micro details normal map...")
-        try:
-            micro_normal_map = create_micro_normal_map(base_img)
-        except Exception as e:
-            print_colored("red", str(e))
-            return False
-
-        system(CLEAR)
-        print_colored("blue", "Generating macro details normal map...")
-        try:
-            macro_normal_map = create_macro_normal_map(input_img.path)
-        except Exception as e:
-            print_colored("red", str(e))
-            return False
-
-        system(CLEAR)
-        print_colored("blue", "Blending micro and macro normal maps...")
-        try:
-            blended_img = blend_normals(
-                micro_normal_map, macro_normal_map, alpha=blending_factor
-            )
-        except Exception as e:
-            print_colored("red", str(e))
-            return False
-
-        system(CLEAR)
-        print_colored("blue", "Saving image...")
-        try:
-            output_path = path.join(
-                output_directory,
-                "normal_"
-                + path.basename(input_img.path).replace(
-                    path.basename(input_img.path).split(".")[-1], "png"
-                ),
-            )
-            imwrite(output_path, blended_img)
-        except Exception as e:
-            print_colored("red", str(e))
-            return False
-    return found_images
-
-
-def convert2dds(_input_path: str, _output_path: str | None, output_format: str = "dds"):
-    print_colored("blue", "Converting image to specified format...")
-    if not _output_path:
-        _output_path = path.dirname(_input_path)
-    input_path = path.abspath(_input_path)
-    output_path = path.abspath(_output_path)
-    if not path.exists(output_path):
-        mkdir(output_path)
-
-    initial_image = imageio.imread(input_path)
-    if not path.isfile(output_path):
-        output_path = path.join(
-            output_path,
-            path.basename(input_path).replace(input_path.split(".")[-1], output_format),
+        output_path = Path(
+            output_directory, Path(image.name).with_suffix("." + output_format)
         )
-    else:
-        output_path = output_path.replace(output_path.split("r")[-1], output_format)
-    imageio.imwrite(output_path, initial_image)
+        if not generate_normal(
+            image.path, str(output_path), output_format, blending_factor
+        ):
+            return False
+    return True
 
 
 def parse_args():
@@ -140,17 +98,14 @@ def main():
     output_dir = args.output
     blending_factor = args.blend
     output_format = args.format
-    imgs2normals(input_dir, output_dir, blending_factor)
-    for normal in scandir(output_dir):
-        if normal.is_dir():
-            continue
-        if normal.name.lower().endswith(".png") and normal.name.lower().startswith(
-            "normal_"
-        ):
-            if output_format != "png":
-                convert2dds(normal.path, output_dir, output_format)
-                remove(normal.path)
-    print_colored("green", "Done!")
+
+    if output_dir is None:
+        output_dir = input_dir
+    if not Path(output_dir).exists():
+        Path(output_dir).mkdir(parents=True, exist_ok=True)
+
+    if not process_directory(input_dir, output_dir, output_format, blending_factor):
+        print_colored("red", "Generation process interrupted due to an error")
 
 
 if __name__ == "__main__":

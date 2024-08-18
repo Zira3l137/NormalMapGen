@@ -5,7 +5,7 @@ This tool generates normal maps from input images, blending micro and macro deta
 ## Features
 
 - Generates micro and macro normal maps from input images
-- Blends micro and macro normal maps with adjustable strength and blending factor
+- Blends micro and macro normal maps with and blending factor
 - Converts output to specified format
 - Supports PNG, JPG, and TGA input formats
 
@@ -13,9 +13,6 @@ This tool generates normal maps from input images, blending micro and macro deta
 
 - Python 3.x
 - OpenCV (`cv2`)
-- ImageIO
-- NumPy
-- Pillow
 - [imaginairy_normal_map](https://github.com/brycedrennan/imaginairy-normal-map)
 
 ## Installation
@@ -100,9 +97,7 @@ This command will process all compatible images in the `./input_images` director
    - Generates a micro details normal map
    - Generates a macro details normal map
    - Blends the micro and macro normal maps
-   - Saves the blended normal map as a PNG
-3. Converts all generated normal maps to specified format
-4. Removes the intermediate PNG files
+   - Saves the blended normal map as a image in a specified format
 
 ## Contributing
 
