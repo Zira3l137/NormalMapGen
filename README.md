@@ -5,7 +5,7 @@ This tool generates normal maps from input images, blending micro and macro deta
 ## Features
 
 - Generates micro and macro normal maps from input images
-- Blends micro and macro normal maps with and blending factor
+- Blends micro and macro normal maps with adjustable blending factor
 - Converts output to specified format
 - Supports PNG, JPG, and TGA input formats
 
