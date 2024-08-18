@@ -1,6 +1,7 @@
 from argparse import ArgumentParser
 from os import scandir
 from pathlib import Path
+from time import time
 from traceback import format_exc
 
 from cv2 import COLOR_BGR2RGB, cvtColor
@@ -36,7 +37,6 @@ def generate_normal(
         print_mixed("red", text=traceback_str + "\n", colored_text=str(e))
         return False
 
-    print_colored("green", "Done!")
     return True
 
 
@@ -104,8 +104,14 @@ def main():
     if not Path(output_dir).exists():
         Path(output_dir).mkdir(parents=True, exist_ok=True)
 
+    start_time = time()
     if not process_directory(input_dir, output_dir, output_format, blending_factor):
         print_colored("red", "Generation process interrupted due to an error")
+    else:
+        print_colored(
+            "green",
+            f"Generation process finished in {time() - start_time:.2f} seconds",
+        )
 
 
 if __name__ == "__main__":
