@@ -5,6 +5,20 @@ from sys import stdout
 CLEAR = "cls" if os_name == "nt" else "clear"
 
 
+def enable_ansi_escape_sequences():
+    if os_name == "nt":
+        # Check if the Windows terminal supports ANSI escape sequences
+        import ctypes
+
+        kernel32 = ctypes.windll.kernel32
+        # 0x0001 is ENABLE_VIRTUAL_TERMINAL_PROCESSING
+        mode = ctypes.c_ulong()
+        h = kernel32.GetStdHandle(-11)
+        if kernel32.GetConsoleMode(h, ctypes.byref(mode)):
+            mode.value |= 0x0004
+            kernel32.SetConsoleMode(h, mode)
+
+
 def print_colored(color: str, *text: str, end: str = "\n", clear: bool = False) -> None:
     """
     Available colors: red, green, yellow, blue

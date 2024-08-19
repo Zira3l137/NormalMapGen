@@ -10,7 +10,10 @@ from PIL import Image
 from blendNorms import blend_normals
 from getMacroNorm import create_macro_normal_map
 from getMicroNorm import create_micro_normal_map
-from print_colored import print_colored, print_mixed
+from print_colored import (enable_ansi_escape_sequences, print_colored,
+                           print_mixed)
+
+enable_ansi_escape_sequences()
 
 
 def generate_normal(
