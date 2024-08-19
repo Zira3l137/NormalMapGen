@@ -9,6 +9,11 @@ This tool generates normal maps from input images, blending micro and macro deta
 - Converts output to specified format
 - Supports PNG, JPG, and TGA input formats
 
+![image](https://github.com/user-attachments/assets/33f66674-ebb0-47cb-af8f-968661bc7b3a)
+![image](https://github.com/user-attachments/assets/ff8f045a-23f5-4728-b8f4-e5ab2b5dde90)
+
+Fire mage robe texture by [Vurt](https://next.nexusmods.com/profile/vurt/about-me)
+
 ## Requirements
 
 - Python 3.x
