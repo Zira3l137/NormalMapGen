@@ -60,7 +60,7 @@ def process_directory(
             continue
         output_path = Path(
             output_directory,
-            prefix + "_" + Path(image.name).stem + "_" + suffix + f".{output_format}",
+            prefix + Path(image.name).stem + suffix + f".{output_format}",
         )
         if not generate_normal(
             image.path, str(output_path), output_format, blending_factor
@@ -106,7 +106,7 @@ def parse_args():
         "-s",
         "--suffix",
         type=str,
-        default="normal",
+        default="_normal",
         help="Set the suffix for the output files (default: )",
     )
     return parser.parse_args()
