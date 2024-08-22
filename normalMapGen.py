@@ -48,6 +48,8 @@ def process_directory(
     output_directory: str,
     output_format: str,
     blending_factor: float,
+    prefix: str = "",
+    suffix: str = "",
 ) -> bool:
     for image in scandir(input_directory):
         if image.is_dir():
@@ -57,7 +59,8 @@ def process_directory(
         ]:
             continue
         output_path = Path(
-            output_directory, Path(image.name).with_suffix("." + output_format)
+            output_directory,
+            prefix + "_" + Path(image.name).stem + "_" + suffix + f".{output_format}",
         )
         if not generate_normal(
             image.path, str(output_path), output_format, blending_factor
@@ -92,6 +95,20 @@ def parse_args():
         default="dds",
         help="Set the output format for the final normal map (default: dds)",
     )
+    parser.add_argument(
+        "-p",
+        "--prefix",
+        type=str,
+        default="",
+        help="Set the prefix for the output files (default: )",
+    )
+    parser.add_argument(
+        "-s",
+        "--suffix",
+        type=str,
+        default="normal",
+        help="Set the suffix for the output files (default: )",
+    )
     return parser.parse_args()
 
 
@@ -101,6 +118,8 @@ def main():
     output_dir = args.output
     blending_factor = args.blend
     output_format = args.format
+    prefix = args.prefix
+    suffix = args.suffix
 
     if output_dir is None:
         output_dir = input_dir
@@ -108,7 +127,9 @@ def main():
         Path(output_dir).mkdir(parents=True, exist_ok=True)
 
     start_time = time()
-    if not process_directory(input_dir, output_dir, output_format, blending_factor):
+    if not process_directory(
+        input_dir, output_dir, output_format, blending_factor, prefix, suffix
+    ):
         print_colored("red", "Generation process interrupted due to an error")
     else:
         print_colored(
