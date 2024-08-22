@@ -86,6 +86,8 @@ Each script in this repository can be used separetely as a command line tool for
 - `-b`, `--blend`: Set the blending factor between micro and macro normal maps (default: 0.5)
 - `-f`, `--format`: Set the output format for the final normal map (default: dds)
 - `-h`, `--help`: Show this help message
+- `-p`, `--prefix`: Set the prefix for the output files (default: )
+- `-s`, `--suffix`: Set the suffix for the output files (default: `_normal`)
 
 ### Example
 
